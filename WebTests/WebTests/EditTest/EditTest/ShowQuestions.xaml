@@ -1,0 +1,42 @@
+﻿<Controls:MetroWindow x:Class="EditTest.ShowQUESTION"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EditTest"
+        mc:Ignorable="d"
+        Title="QUESTION" Height="450" Width="800"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" WindowState="Maximized"
+        >
+    <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" MinWidth="100"/>
+                <ColumnDefinition  MinWidth="150"/>
+            </Grid.ColumnDefinitions>
+
+            <!--<ListBox Name="listQuest" ItemsSource="{Binding text}"></ListBox>-->
+            <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button HorizontalAlignment="Left" Content="Add question" Width="110" Click="Button_Click_1" Height="30" VerticalAlignment="Top" Margin="20,25,0,0" Grid.RowSpan="2"/>
+                <ListBox Grid.Row="1" Margin="20" Name="LbQuestions" SelectionChanged="listQuest_SelectionChanged_1" ItemsSource="{Binding Path=list_voprosov}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Path=QUESTIONTEXT}" FontSize="14"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+        </Grid>
+            <GridSplitter Grid.Column ="0" Background="Blue" Width="1"
+                 HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
+            <ScrollViewer HorizontalAlignment="Stretch" Grid.Column="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" MinWidth="150">
+                <StackPanel Grid.Column="1" Name="stP" Orientation="Vertical" SizeChanged="GridSplitter_SizeChanged_1">
+
+                </StackPanel>
+            </ScrollViewer>
+    </Grid>
+</Controls:MetroWindow>

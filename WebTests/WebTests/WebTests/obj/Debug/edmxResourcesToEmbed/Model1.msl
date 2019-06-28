@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище testdbModelContainer" CdmEntityContainer="testdbEntities">
+    <EntitySetMapping Name="Answers">
+      <EntityTypeMapping TypeName="testdbModel.Answers">
+        <MappingFragment StoreEntitySet="Answers">
+          <ScalarProperty Name="order" ColumnName="order" />
+          <ScalarProperty Name="idpart" ColumnName="idpart" />
+          <ScalarProperty Name="id_questions" ColumnName="id_questions" />
+          <ScalarProperty Name="answer" ColumnName="answer" />
+          <ScalarProperty Name="flag" ColumnName="flag" />
+          <ScalarProperty Name="IdAnswers" ColumnName="IdAnswers" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Logins">
+      <EntityTypeMapping TypeName="testdbModel.Logins">
+        <MappingFragment StoreEntitySet="Logins">
+          <ScalarProperty Name="pass" ColumnName="pass" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="idLogins" ColumnName="idLogins" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Parts">
+      <EntityTypeMapping TypeName="testdbModel.Parts">
+        <MappingFragment StoreEntitySet="Parts">
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="nameParts" ColumnName="nameParts" />
+          <ScalarProperty Name="idParts" ColumnName="idParts" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Questions">
+      <EntityTypeMapping TypeName="testdbModel.Questions">
+        <MappingFragment StoreEntitySet="Questions">
+          <ScalarProperty Name="Enumq" ColumnName="Enumq" />
+          <ScalarProperty Name="text" ColumnName="text" />
+          <ScalarProperty Name="parts_id" ColumnName="parts_id" />
+          <ScalarProperty Name="questid" ColumnName="questid" />
+          <ScalarProperty Name="IdQuestions" ColumnName="IdQuestions" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Records">
+      <EntityTypeMapping TypeName="testdbModel.Records">
+        <MappingFragment StoreEntitySet="Records">
+          <ScalarProperty Name="partid" ColumnName="partid" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="result" ColumnName="result" />
+          <ScalarProperty Name="idLogin" ColumnName="idLogin" />
+          <ScalarProperty Name="idRecords" ColumnName="idRecords" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

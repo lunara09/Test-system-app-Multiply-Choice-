@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="testdb2ModelStoreContainer" CdmEntityContainer="testdb2Entities">
+    <EntitySetMapping Name="ANSWER">
+      <EntityTypeMapping TypeName="testdb2Model.ANSWER">
+        <MappingFragment StoreEntitySet="ANSWER">
+          <ScalarProperty Name="ANSWERID" ColumnName="ANSWERID" />
+          <ScalarProperty Name="ANSWERTEXT" ColumnName="ANSWERTEXT" />
+          <ScalarProperty Name="ANSWERNOTE" ColumnName="ANSWERNOTE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QA">
+      <EntityTypeMapping TypeName="testdb2Model.QA">
+        <MappingFragment StoreEntitySet="QA">
+          <ScalarProperty Name="QA_ID" ColumnName="QA_ID" />
+          <ScalarProperty Name="QUESTIONID" ColumnName="QUESTIONID" />
+          <ScalarProperty Name="ANSWERID" ColumnName="ANSWERID" />
+          <ScalarProperty Name="CORRECTANSWER" ColumnName="CORRECTANSWER" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QUESTION">
+      <EntityTypeMapping TypeName="testdb2Model.QUESTION">
+        <MappingFragment StoreEntitySet="QUESTION">
+          <ScalarProperty Name="QUESTIONID" ColumnName="QUESTIONID" />
+          <ScalarProperty Name="TESTID" ColumnName="TESTID" />
+          <ScalarProperty Name="QUESTIONTEXT" ColumnName="QUESTIONTEXT" />
+          <ScalarProperty Name="QUESTIONNOTE" ColumnName="QUESTIONNOTE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TEST">
+      <EntityTypeMapping TypeName="testdb2Model.TEST">
+        <MappingFragment StoreEntitySet="TEST">
+          <ScalarProperty Name="TESTID" ColumnName="TESTID" />
+          <ScalarProperty Name="TESTCATERY" ColumnName="TESTCATERY" />
+          <ScalarProperty Name="TESTTITLE" ColumnName="TESTTITLE" />
+          <ScalarProperty Name="TESTNOTE" ColumnName="TESTNOTE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USER">
+      <EntityTypeMapping TypeName="testdb2Model.USER">
+        <MappingFragment StoreEntitySet="USER">
+          <ScalarProperty Name="USERID" ColumnName="USERID" />
+          <ScalarProperty Name="LNAME" ColumnName="LNAME" />
+          <ScalarProperty Name="FNAME" ColumnName="FNAME" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERANSWERS">
+      <EntityTypeMapping TypeName="testdb2Model.USERANSWERS">
+        <MappingFragment StoreEntitySet="USERANSWERS">
+          <ScalarProperty Name="USERTESTID" ColumnName="USERTESTID" />
+          <ScalarProperty Name="QA_ID" ColumnName="QA_ID" />
+          <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="USERTEST">
+      <EntityTypeMapping TypeName="testdb2Model.USERTEST">
+        <MappingFragment StoreEntitySet="USERTEST">
+          <ScalarProperty Name="USERTESTID" ColumnName="USERTESTID" />
+          <ScalarProperty Name="USERID" ColumnName="USERID" />
+          <ScalarProperty Name="TESTID" ColumnName="TESTID" />
+          <ScalarProperty Name="TESTDATE" ColumnName="TESTDATE" />
+          <ScalarProperty Name="TESTREMARKS" ColumnName="TESTREMARKS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

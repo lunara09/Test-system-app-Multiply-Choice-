@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="testdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="testdbEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Answers" EntityType="testdbModel.Answers" />
+    <EntitySet Name="Logins" EntityType="testdbModel.Logins" />
+    <EntitySet Name="Parts" EntityType="testdbModel.Parts" />
+    <EntitySet Name="Questions" EntityType="testdbModel.Questions" />
+    <EntitySet Name="Records" EntityType="testdbModel.Records" />
+    <AssociationSet Name="FK_Answers_Parts" Association="testdbModel.FK_Answers_Parts">
+      <End Role="Parts" EntitySet="Parts" />
+      <End Role="Answers" EntitySet="Answers" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Answers_Questions" Association="testdbModel.fk_Answers_Questions">
+      <End Role="Questions" EntitySet="Questions" />
+      <End Role="Answers" EntitySet="Answers" />
+    </AssociationSet>
+    <AssociationSet Name="fk_Records_Logins" Association="testdbModel.fk_Records_Logins">
+      <End Role="Logins" EntitySet="Logins" />
+      <End Role="Records" EntitySet="Records" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Questions_Parts" Association="testdbModel.FK_Questions_Parts">
+      <End Role="Parts" EntitySet="Parts" />
+      <End Role="Questions" EntitySet="Questions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_records_Parts" Association="testdbModel.FK_records_Parts">
+      <End Role="Parts" EntitySet="Parts" />
+      <End Role="Records" EntitySet="Records" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Answers">
+    <Key>
+      <PropertyRef Name="IdAnswers" />
+    </Key>
+    <Property Name="IdAnswers" Type="Int32" Nullable="false" />
+    <Property Name="flag" Type="Boolean" />
+    <Property Name="answer" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="id_questions" Type="Int32" Nullable="false" />
+    <Property Name="idpart" Type="Int32" Nullable="false" />
+    <Property Name="order" Type="Int32" />
+    <NavigationProperty Name="Parts" Relationship="testdbModel.FK_Answers_Parts" FromRole="Answers" ToRole="Parts" />
+    <NavigationProperty Name="Questions" Relationship="testdbModel.fk_Answers_Questions" FromRole="Answers" ToRole="Questions" />
+  </EntityType>
+  <EntityType Name="Logins">
+    <Key>
+      <PropertyRef Name="idLogins" />
+    </Key>
+    <Property Name="idLogins" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="pass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Records" Relationship="testdbModel.fk_Records_Logins" FromRole="Logins" ToRole="Records" />
+  </EntityType>
+  <EntityType Name="Parts">
+    <Key>
+      <PropertyRef Name="idParts" />
+    </Key>
+    <Property Name="idParts" Type="Int32" Nullable="false" />
+    <Property Name="nameParts" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="status" Type="Boolean" />
+    <NavigationProperty Name="Answers" Relationship="testdbModel.FK_Answers_Parts" FromRole="Parts" ToRole="Answers" />
+    <NavigationProperty Name="Questions" Relationship="testdbModel.FK_Questions_Parts" FromRole="Parts" ToRole="Questions" />
+    <NavigationProperty Name="Records" Relationship="testdbModel.FK_records_Parts" FromRole="Parts" ToRole="Records" />
+  </EntityType>
+  <EntityType Name="Questions">
+    <Key>
+      <PropertyRef Name="IdQuestions" />
+    </Key>
+    <Property Name="IdQuestions" Type="Int32" Nullable="false" />
+    <Property Name="questid" Type="Int32" Nullable="false" />
+    <Property Name="parts_id" Type="Int32" Nullable="false" />
+    <Property Name="text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Enumq" Type="Int32" />
+    <NavigationProperty Name="Answers" Relationship="testdbModel.fk_Answers_Questions" FromRole="Questions" ToRole="Answers" />
+    <NavigationProperty Name="Parts" Relationship="testdbModel.FK_Questions_Parts" FromRole="Questions" ToRole="Parts" />
+  </EntityType>
+  <EntityType Name="Records">
+    <Key>
+      <PropertyRef Name="idRecords" />
+    </Key>
+    <Property Name="idRecords" Type="Int32" Nullable="false" />
+    <Property Name="idLogin" Type="Int32" Nullable="false" />
+    <Property Name="result" Type="Boolean" Nullable="false" />
+    <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="partid" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Logins" Relationship="testdbModel.fk_Records_Logins" FromRole="Records" ToRole="Logins" />
+    <NavigationProperty Name="Parts" Relationship="testdbModel.FK_records_Parts" FromRole="Records" ToRole="Parts" />
+  </EntityType>
+  <Association Name="FK_Answers_Parts">
+    <End Type="testdbModel.Parts" Role="Parts" Multiplicity="1" />
+    <End Type="testdbModel.Answers" Role="Answers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parts">
+        <PropertyRef Name="idParts" />
+      </Principal>
+      <Dependent Role="Answers">
+        <PropertyRef Name="idpart" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Answers_Questions">
+    <End Type="testdbModel.Questions" Role="Questions" Multiplicity="1" />
+    <End Type="testdbModel.Answers" Role="Answers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Questions">
+        <PropertyRef Name="IdQuestions" />
+      </Principal>
+      <Dependent Role="Answers">
+        <PropertyRef Name="id_questions" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_Records_Logins">
+    <End Type="testdbModel.Logins" Role="Logins" Multiplicity="1" />
+    <End Type="testdbModel.Records" Role="Records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Logins">
+        <PropertyRef Name="idLogins" />
+      </Principal>
+      <Dependent Role="Records">
+        <PropertyRef Name="idLogin" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Questions_Parts">
+    <End Type="testdbModel.Parts" Role="Parts" Multiplicity="1" />
+    <End Type="testdbModel.Questions" Role="Questions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parts">
+        <PropertyRef Name="idParts" />
+      </Principal>
+      <Dependent Role="Questions">
+        <PropertyRef Name="parts_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_records_Parts">
+    <End Type="testdbModel.Parts" Role="Parts" Multiplicity="1" />
+    <End Type="testdbModel.Records" Role="Records" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parts">
+        <PropertyRef Name="idParts" />
+      </Principal>
+      <Dependent Role="Records">
+        <PropertyRef Name="partid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

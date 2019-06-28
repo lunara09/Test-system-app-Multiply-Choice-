@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="testdb2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ANSWER">
+    <Key>
+      <PropertyRef Name="ANSWERID" />
+    </Key>
+    <Property Name="ANSWERID" Type="int" Nullable="false" />
+    <Property Name="ANSWERTEXT" Type="varchar" MaxLength="200" />
+    <Property Name="ANSWERNOTE" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="QA">
+    <Key>
+      <PropertyRef Name="QA_ID" />
+    </Key>
+    <Property Name="QA_ID" Type="int" Nullable="false" />
+    <Property Name="QUESTIONID" Type="int" />
+    <Property Name="ANSWERID" Type="int" />
+    <Property Name="CORRECTANSWER" Type="bit" />
+  </EntityType>
+  <EntityType Name="QUESTION">
+    <Key>
+      <PropertyRef Name="QUESTIONID" />
+    </Key>
+    <Property Name="QUESTIONID" Type="int" Nullable="false" />
+    <Property Name="TESTID" Type="int" Nullable="false" />
+    <Property Name="QUESTIONTEXT" Type="varchar" MaxLength="200" />
+    <Property Name="QUESTIONNOTE" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="TEST">
+    <Key>
+      <PropertyRef Name="TESTID" />
+    </Key>
+    <Property Name="TESTID" Type="int" Nullable="false" />
+    <Property Name="TESTCATERY" Type="varchar" MaxLength="50" />
+    <Property Name="TESTTITLE" Type="varchar" MaxLength="50" />
+    <Property Name="TESTNOTE" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="USER">
+    <Key>
+      <PropertyRef Name="USERID" />
+    </Key>
+    <Property Name="USERID" Type="int" Nullable="false" />
+    <Property Name="LNAME" Type="varchar" MaxLength="50" />
+    <Property Name="FNAME" Type="varchar" MaxLength="50" />
+    <Property Name="EMAIL" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="USERANSWERS">
+    <Key>
+      <PropertyRef Name="USERTESTID" />
+      <PropertyRef Name="QA_ID" />
+    </Key>
+    <Property Name="USERTESTID" Type="int" Nullable="false" />
+    <Property Name="QA_ID" Type="int" Nullable="false" />
+    <Property Name="NOTE" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="USERTEST">
+    <Key>
+      <PropertyRef Name="USERTESTID" />
+    </Key>
+    <Property Name="USERTESTID" Type="int" Nullable="false" />
+    <Property Name="USERID" Type="int" Nullable="false" />
+    <Property Name="TESTID" Type="int" Nullable="false" />
+    <Property Name="TESTDATE" Type="datetime" />
+    <Property Name="TESTREMARKS" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <Association Name="FK_QA_RELATIONS_ANSWER">
+    <End Role="ANSWER" Type="Self.ANSWER" Multiplicity="0..1" />
+    <End Role="QA" Type="Self.QA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANSWER">
+        <PropertyRef Name="ANSWERID" />
+      </Principal>
+      <Dependent Role="QA">
+        <PropertyRef Name="ANSWERID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QA_RELATIONS_QUESTION">
+    <End Role="QUESTION" Type="Self.QUESTION" Multiplicity="0..1" />
+    <End Role="QA" Type="Self.QA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QUESTION">
+        <PropertyRef Name="QUESTIONID" />
+      </Principal>
+      <Dependent Role="QA">
+        <PropertyRef Name="QUESTIONID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QUESTION_RELATIONS_TEST">
+    <End Role="TEST" Type="Self.TEST" Multiplicity="1" />
+    <End Role="QUESTION" Type="Self.QUESTION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TEST">
+        <PropertyRef Name="TESTID" />
+      </Principal>
+      <Dependent Role="QUESTION">
+        <PropertyRef Name="TESTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USERANSW_USERANSWE_QA">
+    <End Role="QA" Type="Self.QA" Multiplicity="1" />
+    <End Role="USERANSWERS" Type="Self.USERANSWERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QA">
+        <PropertyRef Name="QA_ID" />
+      </Principal>
+      <Dependent Role="USERANSWERS">
+        <PropertyRef Name="QA_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USERANSW_USERANSWE_USERTEST">
+    <End Role="USERTEST" Type="Self.USERTEST" Multiplicity="1" />
+    <End Role="USERANSWERS" Type="Self.USERANSWERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERTEST">
+        <PropertyRef Name="USERTESTID" />
+      </Principal>
+      <Dependent Role="USERANSWERS">
+        <PropertyRef Name="USERTESTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USERTEST_RELATIONS_TEST">
+    <End Role="TEST" Type="Self.TEST" Multiplicity="1" />
+    <End Role="USERTEST" Type="Self.USERTEST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TEST">
+        <PropertyRef Name="TESTID" />
+      </Principal>
+      <Dependent Role="USERTEST">
+        <PropertyRef Name="TESTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USERTEST_RELATIONS_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="USERTEST" Type="Self.USERTEST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USERID" />
+      </Principal>
+      <Dependent Role="USERTEST">
+        <PropertyRef Name="USERID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="testdb2ModelStoreContainer">
+    <EntitySet Name="ANSWER" EntityType="Self.ANSWER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QA" EntityType="Self.QA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QUESTION" EntityType="Self.QUESTION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TEST" EntityType="Self.TEST" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USERANSWERS" EntityType="Self.USERANSWERS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USERTEST" EntityType="Self.USERTEST" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_QA_RELATIONS_ANSWER" Association="Self.FK_QA_RELATIONS_ANSWER">
+      <End Role="ANSWER" EntitySet="ANSWER" />
+      <End Role="QA" EntitySet="QA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QA_RELATIONS_QUESTION" Association="Self.FK_QA_RELATIONS_QUESTION">
+      <End Role="QUESTION" EntitySet="QUESTION" />
+      <End Role="QA" EntitySet="QA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QUESTION_RELATIONS_TEST" Association="Self.FK_QUESTION_RELATIONS_TEST">
+      <End Role="TEST" EntitySet="TEST" />
+      <End Role="QUESTION" EntitySet="QUESTION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USERANSW_USERANSWE_QA" Association="Self.FK_USERANSW_USERANSWE_QA">
+      <End Role="QA" EntitySet="QA" />
+      <End Role="USERANSWERS" EntitySet="USERANSWERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USERANSW_USERANSWE_USERTEST" Association="Self.FK_USERANSW_USERANSWE_USERTEST">
+      <End Role="USERTEST" EntitySet="USERTEST" />
+      <End Role="USERANSWERS" EntitySet="USERANSWERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USERTEST_RELATIONS_TEST" Association="Self.FK_USERTEST_RELATIONS_TEST">
+      <End Role="TEST" EntitySet="TEST" />
+      <End Role="USERTEST" EntitySet="USERTEST" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USERTEST_RELATIONS_USER" Association="Self.FK_USERTEST_RELATIONS_USER">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="USERTEST" EntitySet="USERTEST" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

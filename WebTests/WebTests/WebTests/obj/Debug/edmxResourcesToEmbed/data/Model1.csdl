@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="testdb2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ANSWER">
+    <Key>
+      <PropertyRef Name="ANSWERID" />
+    </Key>
+    <Property Name="ANSWERID" Type="Int32" Nullable="false" />
+    <Property Name="ANSWERTEXT" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="ANSWERNOTE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="QA" Relationship="Self.FK_QA_RELATIONS_ANSWER" FromRole="ANSWER" ToRole="QA" />
+  </EntityType>
+  <EntityType Name="QA">
+    <Key>
+      <PropertyRef Name="QA_ID" />
+    </Key>
+    <Property Name="QA_ID" Type="Int32" Nullable="false" />
+    <Property Name="QUESTIONID" Type="Int32" />
+    <Property Name="ANSWERID" Type="Int32" />
+    <Property Name="CORRECTANSWER" Type="Boolean" />
+    <NavigationProperty Name="ANSWER" Relationship="Self.FK_QA_RELATIONS_ANSWER" FromRole="QA" ToRole="ANSWER" />
+    <NavigationProperty Name="QUESTION" Relationship="Self.FK_QA_RELATIONS_QUESTION" FromRole="QA" ToRole="QUESTION" />
+    <NavigationProperty Name="USERANSWERS" Relationship="Self.FK_USERANSW_USERANSWE_QA" FromRole="QA" ToRole="USERANSWERS" />
+  </EntityType>
+  <EntityType Name="QUESTION">
+    <Key>
+      <PropertyRef Name="QUESTIONID" />
+    </Key>
+    <Property Name="QUESTIONID" Type="Int32" Nullable="false" />
+    <Property Name="TESTID" Type="Int32" Nullable="false" />
+    <Property Name="QUESTIONTEXT" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="QUESTIONNOTE" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="QA" Relationship="Self.FK_QA_RELATIONS_QUESTION" FromRole="QUESTION" ToRole="QA" />
+    <NavigationProperty Name="TEST" Relationship="Self.FK_QUESTION_RELATIONS_TEST" FromRole="QUESTION" ToRole="TEST" />
+  </EntityType>
+  <EntityType Name="TEST">
+    <Key>
+      <PropertyRef Name="TESTID" />
+    </Key>
+    <Property Name="TESTID" Type="Int32" Nullable="false" />
+    <Property Name="TESTCATERY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TESTTITLE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TESTNOTE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="QUESTION" Relationship="Self.FK_QUESTION_RELATIONS_TEST" FromRole="TEST" ToRole="QUESTION" />
+    <NavigationProperty Name="USERTEST" Relationship="Self.FK_USERTEST_RELATIONS_TEST" FromRole="TEST" ToRole="USERTEST" />
+  </EntityType>
+  <EntityType Name="USER">
+    <Key>
+      <PropertyRef Name="USERID" />
+    </Key>
+    <Property Name="USERID" Type="Int32" Nullable="false" />
+    <Property Name="LNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FNAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="USERTEST" Relationship="Self.FK_USERTEST_RELATIONS_USER" FromRole="USER" ToRole="USERTEST" />
+  </EntityType>
+  <EntityType Name="USERANSWERS">
+    <Key>
+      <PropertyRef Name="USERTESTID" />
+      <PropertyRef Name="QA_ID" />
+    </Key>
+    <Property Name="USERTESTID" Type="Int32" Nullable="false" />
+    <Property Name="QA_ID" Type="Int32" Nullable="false" />
+    <Property Name="NOTE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="QA" Relationship="Self.FK_USERANSW_USERANSWE_QA" FromRole="USERANSWERS" ToRole="QA" />
+    <NavigationProperty Name="USERTEST" Relationship="Self.FK_USERANSW_USERANSWE_USERTEST" FromRole="USERANSWERS" ToRole="USERTEST" />
+  </EntityType>
+  <EntityType Name="USERTEST">
+    <Key>
+      <PropertyRef Name="USERTESTID" />
+    </Key>
+    <Property Name="USERTESTID" Type="Int32" Nullable="false" />
+    <Property Name="USERID" Type="Int32" Nullable="false" />
+    <Property Name="TESTID" Type="Int32" Nullable="false" />
+    <Property Name="TESTDATE" Type="DateTime" Precision="3" />
+    <Property Name="TESTREMARKS" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TEST" Relationship="Self.FK_USERTEST_RELATIONS_TEST" FromRole="USERTEST" ToRole="TEST" />
+    <NavigationProperty Name="USER" Relationship="Self.FK_USERTEST_RELATIONS_USER" FromRole="USERTEST" ToRole="USER" />
+    <NavigationProperty Name="USERANSWERS" Relationship="Self.FK_USERANSW_USERANSWE_USERTEST" FromRole="USERTEST" ToRole="USERANSWERS" />
+  </EntityType>
+  <Association Name="FK_QA_RELATIONS_ANSWER">
+    <End Role="ANSWER" Type="Self.ANSWER" Multiplicity="0..1" />
+    <End Role="QA" Type="Self.QA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANSWER">
+        <PropertyRef Name="ANSWERID" />
+      </Principal>
+      <Dependent Role="QA">
+        <PropertyRef Name="ANSWERID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QA_RELATIONS_QUESTION">
+    <End Role="QUESTION" Type="Self.QUESTION" Multiplicity="0..1" />
+    <End Role="QA" Type="Self.QA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QUESTION">
+        <PropertyRef Name="QUESTIONID" />
+      </Principal>
+      <Dependent Role="QA">
+        <PropertyRef Name="QUESTIONID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USERANSW_USERANSWE_QA">
+    <End Role="QA" Type="Self.QA" Multiplicity="1" />
+    <End Role="USERANSWERS" Type="Self.USERANSWERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="QA">
+        <PropertyRef Name="QA_ID" />
+      </Principal>
+      <Dependent Role="USERANSWERS">
+        <PropertyRef Name="QA_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_QUESTION_RELATIONS_TEST">
+    <End Role="TEST" Type="Self.TEST" Multiplicity="1" />
+    <End Role="QUESTION" Type="Self.QUESTION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TEST">
+        <PropertyRef Name="TESTID" />
+      </Principal>
+      <Dependent Role="QUESTION">
+        <PropertyRef Name="TESTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USERTEST_RELATIONS_TEST">
+    <End Role="TEST" Type="Self.TEST" Multiplicity="1" />
+    <End Role="USERTEST" Type="Self.USERTEST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TEST">
+        <PropertyRef Name="TESTID" />
+      </Principal>
+      <Dependent Role="USERTEST">
+        <PropertyRef Name="TESTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USERTEST_RELATIONS_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="1" />
+    <End Role="USERTEST" Type="Self.USERTEST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="USERID" />
+      </Principal>
+      <Dependent Role="USERTEST">
+        <PropertyRef Name="USERID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_USERANSW_USERANSWE_USERTEST">
+    <End Role="USERTEST" Type="Self.USERTEST" Multiplicity="1" />
+    <End Role="USERANSWERS" Type="Self.USERANSWERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USERTEST">
+        <PropertyRef Name="USERTESTID" />
+      </Principal>
+      <Dependent Role="USERANSWERS">
+        <PropertyRef Name="USERTESTID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="testdb2Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ANSWER" EntityType="Self.ANSWER" />
+    <EntitySet Name="QA" EntityType="Self.QA" />
+    <EntitySet Name="QUESTION" EntityType="Self.QUESTION" />
+    <EntitySet Name="TEST" EntityType="Self.TEST" />
+    <EntitySet Name="USER" EntityType="Self.USER" />
+    <EntitySet Name="USERANSWERS" EntityType="Self.USERANSWERS" />
+    <EntitySet Name="USERTEST" EntityType="Self.USERTEST" />
+    <AssociationSet Name="FK_QA_RELATIONS_ANSWER" Association="Self.FK_QA_RELATIONS_ANSWER">
+      <End Role="ANSWER" EntitySet="ANSWER" />
+      <End Role="QA" EntitySet="QA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QA_RELATIONS_QUESTION" Association="Self.FK_QA_RELATIONS_QUESTION">
+      <End Role="QUESTION" EntitySet="QUESTION" />
+      <End Role="QA" EntitySet="QA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USERANSW_USERANSWE_QA" Association="Self.FK_USERANSW_USERANSWE_QA">
+      <End Role="QA" EntitySet="QA" />
+      <End Role="USERANSWERS" EntitySet="USERANSWERS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_QUESTION_RELATIONS_TEST" Association="Self.FK_QUESTION_RELATIONS_TEST">
+      <End Role="TEST" EntitySet="TEST" />
+      <End Role="QUESTION" EntitySet="QUESTION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USERTEST_RELATIONS_TEST" Association="Self.FK_USERTEST_RELATIONS_TEST">
+      <End Role="TEST" EntitySet="TEST" />
+      <End Role="USERTEST" EntitySet="USERTEST" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USERTEST_RELATIONS_USER" Association="Self.FK_USERTEST_RELATIONS_USER">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="USERTEST" EntitySet="USERTEST" />
+    </AssociationSet>
+    <AssociationSet Name="FK_USERANSW_USERANSWE_USERTEST" Association="Self.FK_USERANSW_USERANSWE_USERTEST">
+      <End Role="USERTEST" EntitySet="USERTEST" />
+      <End Role="USERANSWERS" EntitySet="USERANSWERS" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
